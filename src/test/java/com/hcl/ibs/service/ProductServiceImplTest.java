@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.BeanUtils;
 
+import com.hcl.ibs.dto.ProductDetailsResponseDTO;
 import com.hcl.ibs.dto.ProductResponseDTO;
 import com.hcl.ibs.entity.Product;
 import com.hcl.ibs.entity.ProductCategory;
@@ -44,27 +45,52 @@ public class ProductServiceImplTest {
 	}
 
 	
-	/*
-	 * @Test public void testFetchProduct() { List<ProductResponseDTO> productName =
-	 * new ArrayList<>(); List<Product> listOfProduct = new ArrayList<>(); Product
-	 * product = new Product(); product.setCategoryId(1);
-	 * product.setProductDescription("this is ING Banking Solutios API");
-	 * product.setProductId(1); product.setProductName("Mortgage");
-	 * listOfProduct.add(product);
-	 * Mockito.when(productRepository.findAllByCategoryId((Mockito.anyInt()))).
-	 * thenReturn(listOfProduct);
-	 * 
-	 * List<Product> listOfProduct
-	 * =productRepository.findAllByCategoryId(categoryId); for(Product eachpr:
-	 * listOfProduct) { ProductResponseDTO productResponseDTO = new
-	 * ProductResponseDTO(); BeanUtils.copyProperties(eachpr, productResponseDTO);
-	 * productName.add(productResponseDTO); } return productName; }
-	 */
+	
+	@Test 
+	public void testFetchProduct() {
+		List<ProductResponseDTO> productName = new ArrayList<>();
+		List<Product> listOfProduct = new ArrayList<>();
+		Product product = new Product(); 
+		product.setCategoryId(1);
+		product.setProductDescription("this is ING Banking Solutios API");
+		product.setProductId(1);
+		product.setProductName("Mortgage");
+		listOfProduct.add(product);
+		Mockito.when(productRepository.findAllByCategoryId((Mockito.anyInt()))).thenReturn(listOfProduct);
+
+		for(Product eachpr: listOfProduct) {
+			ProductResponseDTO productResponseDTO = new ProductResponseDTO(); 
+			BeanUtils.copyProperties(eachpr, productResponseDTO);
+			productName.add(productResponseDTO);
+		} 
+		List<ProductResponseDTO> actual = productServiceImpl.fetchProduct(1);
+		assertNotNull(actual);
+
+	}
+	 
 	 
 
 	@Test
 	public void testFetchProductDetails() {
-		fail("Not yet implemented");
+		  List<ProductDetailsResponseDTO> listOfProductDetailsResponseDTO = new ArrayList<>();
+		  List<Product> listOfProductDetails = new ArrayList<>();
+		  Product product= new Product();
+		  product.setCategoryId(1);
+			product.setProductDescription("this is ING Banking Solutios API");
+			product.setProductId(1);
+			product.setProductName("Mortgage");
+			listOfProductDetails.add(product);
+			Mockito.when(productRepository.findAllByProductId((Mockito.anyInt()))).thenReturn(listOfProductDetails);
+
+			for(Product eachPro: listOfProductDetails) {
+			  ProductDetailsResponseDTO productDetailsResponseDTO= new ProductDetailsResponseDTO();	
+			  BeanUtils.copyProperties(eachPro, productDetailsResponseDTO);
+			  listOfProductDetailsResponseDTO.add(productDetailsResponseDTO);
+		  }
+			
+			List<ProductDetailsResponseDTO> actual = productServiceImpl.fetchProductDetails(1);
+			assertNotNull(actual);
+
 	}
 
 }
