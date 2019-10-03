@@ -1,26 +1,23 @@
 package com.hcl.ibs.dto;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.hcl.ibs.repository.ProductCategoryRepository;
-import com.hcl.ibs.repository.ProductRepository;
-
-@Service
 public class ProductCategoryResponseDTO {
 	
-	@Autowired
-	ProductRepository productRepository;
+	private int productCategoryId;
+	private String productCategoryName;
 	
-	@Autowired
-	ProductCategoryRepository productCategoryRepository;
-
-	public List<ProductCategoryResponseDTO> fetchProductCategory() {
-		
-//		List<ProductCategoryResponseDTO> ListOfProductCategoryResponseDTO= productRepository.findAll()
-		return null;
+	public int getProductCategoryId() {
+		return productCategoryId;
+	}
+	public void setProductCategoryId(int productCategoryId) {
+		this.productCategoryId = productCategoryId;
+	}
+	public String getProductCategoryName() {
+		return productCategoryName;
+	}
+	public void setProductCategoryName(String productCategoryName) {
+		this.productCategoryName = productCategoryName;
 	}
 	
-}
+	}
+	
+
