@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -48,9 +47,7 @@ public class ExcelImportToDB {
 
 			while (rowIterator.hasNext()) {
 				Row row = rowIterator.next();
-
-				Iterator<Cell> cellIterator = row.cellIterator();
-
+			//	Iterator<Cell> cellIterator = row.cellIterator();
 				String prodDesc = "";
 				String productName = "";
 
@@ -61,28 +58,14 @@ public class ExcelImportToDB {
 				System.out.println(productName);
 				System.out.println(prodDesc);
 
-//				String prodDesc = "";
-//				String productName = "";
-//				Cell cell = cellIterator.next();
-//
 				Product product = new Product();
 				ProductCategory productCategoryRepo = new ProductCategory();
-//
-//				String productCategory = cell.getStringCellValue();
-//				if (cellIterator.hasNext()) {
-//					Cell cell1 = cellIterator.next();
-//					productName = cell1.getStringCellValue();
-//				}
-//			
-//				if (cellIterator.hasNext()) {
-//					Cell cell2 = cellIterator.next();
-//					prodDesc = cell2.getStringCellValue();
-//				}
 
-				productCategoryRepo.setCategoryName(productCategory);
+
+				productCategoryRepo.setProductCategoryName(productCategory);
 				ProductCategory productCategory2 = null;
 				Optional<List<ProductCategory>> productCategory1 = productCategoryRepository
-						.findByCategoryName(productCategory);
+						.findByProductCategoryName(productCategory);
 				if (!productCategory1.isPresent()) {
 					productCategory2 = productCategoryRepository.save(productCategoryRepo);
 				} else {

@@ -2,6 +2,7 @@ package com.hcl.ibs.repository;
 
 import java.util.List;
 
+
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,8 @@ import com.hcl.ibs.entity.Product;
 public interface ProductRepository extends JpaRepository<Product, Integer>{
 
 	Optional<List<Product>> findByproductName(String productName);
+	
+	List<Product> findAllByCategoryId(int id);
+
+	List<Product> findAllByProductId(int productId);
 }

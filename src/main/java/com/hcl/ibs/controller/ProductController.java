@@ -9,10 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hcl.ibs.dto.ProductCategoryResponseDTO;
+import com.hcl.ibs.dto.ProductDetailsResponseDTO;
+import com.hcl.ibs.dto.ProductResponseDTO;
 import com.hcl.ibs.entity.ProductCategory;
 import com.hcl.ibs.service.ProductService;
 
@@ -23,7 +23,6 @@ import com.hcl.ibs.service.ProductService;
  */
 
 @RestController
-@RequestMapping("/ibsApp")
 @CrossOrigin(allowedHeaders = { "*", "*/" }, origins = { "*", "*/" })
 public class ProductController {
 	
@@ -39,18 +38,23 @@ public class ProductController {
 	 */
 	
 	@GetMapping("/category")
-//	public List<ProductCategoryResponseDTO> getProductCategoryList() {
 	public ResponseEntity<List<ProductCategory>> getProductCategoryList() {
-
-	
 		logger.info(":: Enter into ProductController--------::getProductCategoryList()");
-	//	List<ProductCategoryResponseDTO> listOfProductCategoryResponseDTO= productService.fetchProductCategory();
-		List<ProductCategory> listOfProductCategoryResponseDTO= productService.fetchProductCategory();
-
-	//	return listOfProductCategoryResponseDTO;
-		
+		List<ProductCategory> listOfProductCategoryResponseDTO= productService.fetchProductCategory();		
 		return new ResponseEntity<>(listOfProductCategoryResponseDTO, HttpStatus.OK);
-
-		
+	}
+	
+	@GetMapping("/product/{categoryId}")
+	public ResponseEntity<List<ProductResponseDTO>> getProduct(int categoryId) {
+		logger.info(":: Enter into ProductController--------::getProduct()");
+		List<ProductResponseDTO> listOfProductCategoryResponseDTO= productService.fetchProduct(categoryId);		
+		return new ResponseEntity<>(listOfProductCategoryResponseDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping("/productDetails/{productId}")
+	public ResponseEntity<List<ProductDetailsResponseDTO>> getProductDetails(int productId){
+		logger.info(":: Enter into ProductController--------::getProductDetails()");
+		List<ProductDetailsResponseDTO> listOfProductResponseDTO = productService.fetchProductDetails(productId);
+		return new ResponseEntity<>(listOfProductResponseDTO,HttpStatus.OK);
 	}
 }

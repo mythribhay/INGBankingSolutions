@@ -10,9 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.ibs.controller.ProductController;
-import com.hcl.ibs.dto.ProductCategoryResponseDTO;
+import com.hcl.ibs.dto.ProductDetailsResponseDTO;
+import com.hcl.ibs.dto.ProductResponseDTO;
+import com.hcl.ibs.entity.Product;
 import com.hcl.ibs.entity.ProductCategory;
-import com.hcl.ibs.exception.ProductCategoryNotFound;
 import com.hcl.ibs.repository.ProductCategoryRepository;
 import com.hcl.ibs.repository.ProductRepository;
 
@@ -34,15 +35,47 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	
 	@Override
-//	public List<ProductCategoryResponseDTO> fetchProductCategory() {
 		public List<ProductCategory> fetchProductCategory() {
 
 		logger.info(":: Enter into ProductServiceImpl--------::fetchProductCategory()");
-		List<ProductCategoryResponseDTO> listOfProductCategoryResponseDTO = new ArrayList<>();
+	//	List<ProductCategoryResponseDTO> listOfProductCategoryResponseDTO = new ArrayList<>();
 		List<ProductCategory> listOfProductCategory =productCategoryRepository.findAll();
 	//	BeanUtils.copyProperties(listOfProductCategory, listOfProductCategoryResponseDTO);
-
 		return listOfProductCategory;
 	}
 
+	/**
+	 * 
+	 * @param categoryId
+	 * @return ProductResponseDTO - list of product Name related to that specific category
+	 */
+	@Override
+		public List<ProductResponseDTO> fetchProduct(int categoryId) {
+		logger.info(":: Enter into ProductServiceImpl--------::fetchProduct()");
+		List<ProductResponseDTO> productName = new ArrayList<>();		
+		List<Product> listOfProduct =productRepository.findAllByCategoryId(categoryId);
+		for(Product eachpr: listOfProduct) {	
+		ProductResponseDTO productResponseDTO = new ProductResponseDTO();
+		BeanUtils.copyProperties(eachpr, productResponseDTO);
+		productName.add(productResponseDTO);
+		}
+		return productName;
+	}
+
+	/**
+	 * 
+	 * @param productId
+	 * @return ProductDetailsResponseDTO - productDetials
+	 */
+	  @Override 
+	  public List<ProductDetailsResponseDTO> fetchProductDetails(int productId) {
+	  List<ProductDetailsResponseDTO> listOfProductDetailsResponseDTO = new ArrayList<>();
+	  List<Product> listOfProductDetails = productRepository.findAllByProductId(productId);
+	  for(Product eachPro: listOfProductDetails) {
+		  ProductDetailsResponseDTO productDetailsResponseDTO= new ProductDetailsResponseDTO();	
+		  BeanUtils.copyProperties(eachPro, productDetailsResponseDTO);
+		  listOfProductDetailsResponseDTO.add(productDetailsResponseDTO);
+	  }
+	  return listOfProductDetailsResponseDTO;
+	  }
 }
