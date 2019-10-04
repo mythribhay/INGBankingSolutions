@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.BeanUtils;
 
@@ -26,7 +27,7 @@ public class ProductServiceImplTest {
 	ProductCategoryRepository productCategoryRepository;
 	@Mock
 	ProductRepository productRepository;
-	@Mock
+	@InjectMocks
 	ProductServiceImpl productServiceImpl;
 	
 	@Test
